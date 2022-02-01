@@ -4,8 +4,9 @@ FROM rockylinux:8.5
 # ENV PATH /usr/local/bin:$PATH
 
 ENV LANG C.UTF-8
-ENV PYTHON_VERSION 3.9.10
+
 ENV GPG_KEY E3FF2839C048B25C084DEBE9B26995E310250568
+ENV PYTHON_VERSION 3.9.10
 
 RUN set -eux ; \
     \
@@ -35,7 +36,7 @@ RUN set -eux ; \
 	rm -rf "$GNUPGHOME" python.tar.xz.asc; \
 	\
 	mkdir -p /usr/src/python ; \
-	tar -xJf python.tar.xz --strip-components=1 -C /usr/src/python \
+	tar -xJf python.tar.xz --strip-components=1 -C /usr/src/python ;\
 	\
     cd /usr/src/python ; \
     ./configure \
