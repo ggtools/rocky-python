@@ -1,10 +1,15 @@
 FROM rockylinux:8.5
 
-ENV PATH /usr/local/bin:$PATH
+# Rocky Linux already adds /usr/local/bin in the PATH
+# ENV PATH /usr/local/bin:$PATH
+
 ENV LANG C.UTF-8
 ENV PYTHON_VERSION 3.9.10
+ENV GPG_KEY E3FF2839C048B25C084DEBE9B26995E310250568
 
-RUN yum groupinstall -y "Development Tools" && \
+RUN set -eux ; \
+    \
+    yum groupinstall -y "Development Tools" ;\
     yum -y install \
 		libffi-devel \
 		expat-devel \
@@ -14,27 +19,38 @@ RUN yum groupinstall -y "Development Tools" && \
 		gdbm-devel \
 		sqlite-devel \
 		libuuid-devel \
-		&& \
-    yum -y clean all && \
+		; \
+    yum -y clean all ; \
     rm -rf /var/cache
 
 RUN set -eux ; \
     \
-    mkdir -p /usr/src/python ; \
-    curl -s https://www.python.org/ftp/python/3.9.10/Python-3.9.10.tar.xz | tar -xJf - --strip-components=1 -C /usr/src/python ; \
+	curl -s -o python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz"; \
+	curl -s -o python.tar.xz.asc "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz.asc"; \
+	\
+	GNUPGHOME="$(mktemp -d)"; export GNUPGHOME; \
+	gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$GPG_KEY"; \
+	gpg --batch --verify python.tar.xz.asc python.tar.xz; \
+	command -v gpgconf > /dev/null && gpgconf --kill all || :; \
+	rm -rf "$GNUPGHOME" python.tar.xz.asc; \
+	\
+	mkdir -p /usr/src/python ; \
+	tar -xJf python.tar.xz --strip-components=1 -C /usr/src/python \
+	\
     cd /usr/src/python ; \
     ./configure \
-    --build=$(uname -m) \
-    --enable-loadable-sqlite-extensions \
-    --enable-optimizations \
-    --enable-option-checking=fatal \
-    --enable-shared \
-    --with-system-expat \
-    --with-system-ffi \
-    --without-ensurepip \
+		--build=$(uname -m) \
+		--enable-loadable-sqlite-extensions \
+		--enable-optimizations \
+		--enable-option-checking=fatal \
+		--enable-shared \
+		--with-system-expat \
+		--with-system-ffi \
+		--without-ensurepip \
     ; \
     make -j $(nproc) LDFLAGS="-Wl,--strip-all" ; \
     make install ; \ 
+	\
     cd / ; \
     rm -rf /usr/src/python ; \
     find /usr/local -depth \
