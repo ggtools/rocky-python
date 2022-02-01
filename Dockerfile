@@ -5,6 +5,7 @@ ENV LANG C.UTF-8
 ENV PYTHON_VERSION 3.9.10
 
 RUN yum groupinstall -y "Development Tools" && \
+    yum -y install libffi-devel expat-devel && \
     yum -y clean all && \
     rm -rf /var/cache
 
