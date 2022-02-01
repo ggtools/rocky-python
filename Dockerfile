@@ -5,7 +5,16 @@ ENV LANG C.UTF-8
 ENV PYTHON_VERSION 3.9.10
 
 RUN yum groupinstall -y "Development Tools" && \
-    yum -y install libffi-devel expat-devel && \
+    yum -y install \
+		libffi-devel \
+		expat-devel \
+		openssl-devel \
+		readline-devel \
+		bzip2-devel \
+		gdbm-devel \
+		sqlite-devel \
+		libuuid-devel \
+		&& \
     yum -y clean all && \
     rm -rf /var/cache
 
@@ -34,7 +43,7 @@ RUN set -eux ; \
 			-o \( -type f -a \( -name '*.pyc' -o -name '*.pyo' -o -name '*.a' \) \) \
 		\) -exec rm -rf '{}' + \
 	; \
-	\
+	echo "/usr/local/lib" >/etc/ld.so.conf.d/python3.conf ;\
 	ldconfig; \
 	\
 	python3 --version
@@ -59,7 +68,7 @@ ENV PYTHON_GET_PIP_SHA256 f2aaa496cb4dc3c7f3ceb9fe72d6dbe770f4e9c4013b66d7c81903
 
 RUN set -eux; \
 	\
-	curl -L -O get-pip.py "$PYTHON_GET_PIP_URL"; \
+	curl -L -o get-pip.py "$PYTHON_GET_PIP_URL"; \
 	echo "$PYTHON_GET_PIP_SHA256 *get-pip.py" | sha256sum -c -; \
 	\
 	python get-pip.py \
