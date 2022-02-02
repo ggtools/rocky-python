@@ -8,9 +8,9 @@ ENV LANG C.UTF-8
 ENV GPG_KEY A035C8C19219BA821ECEA86B64E628F8D684696D
 ENV PYTHON_VERSION 3.10.2
 
-RUN set -eux ; \
+RUN set -eux; \
     \
-    yum groupinstall -y "Development Tools" ;\
+    yum groupinstall -y "Development Tools"; \
     yum -y install \
 		libffi-devel \
 		expat-devel \
@@ -21,10 +21,10 @@ RUN set -eux ; \
 		sqlite-devel \
 		libuuid-devel \
 		; \
-    yum -y clean all ; \
+    yum -y clean all; \
     rm -rf /var/cache
 
-RUN set -eux ; \
+RUN set -eux; \
     \
 	curl -s -o python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz"; \
 	curl -s -o python.tar.xz.asc "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz.asc"; \
@@ -35,11 +35,11 @@ RUN set -eux ; \
 	command -v gpgconf > /dev/null && gpgconf --kill all || :; \
 	rm -rf "$GNUPGHOME" python.tar.xz.asc; \
 	\
-	mkdir -p /usr/src/python ; \
-	tar -xJf python.tar.xz --strip-components=1 -C /usr/src/python ; \
-	rm python.tar.xz ; \
+	mkdir -p /usr/src/python; \
+	tar -xJf python.tar.xz --strip-components=1 -C /usr/src/python; \
+	rm python.tar.xz; \
 	\
-    cd /usr/src/python ; \
+    cd /usr/src/python; \
     ./configure \
 		--build=$(uname -m)-linux-gnu \
 		--enable-loadable-sqlite-extensions \
@@ -51,18 +51,18 @@ RUN set -eux ; \
 		--with-system-ffi \
 		--without-ensurepip \
     ; \
-    make -j $(nproc) LDFLAGS="-Wl,--strip-all" ; \
-    make install ; \ 
+    make -j $(nproc) LDFLAGS="-Wl,--strip-all"; \
+    make install; \
 	\
-    cd / ; \
-    rm -rf /usr/src/python ; \
+    cd /; \
+    rm -rf /usr/src/python; \
     find /usr/local -depth \
 		\( \
 			\( -type d -a \( -name test -o -name tests -o -name idle_test \) \) \
 			-o \( -type f -a \( -name '*.pyc' -o -name '*.pyo' -o -name '*.a' \) \) \
 		\) -exec rm -rf '{}' + \
 	; \
-	echo "/usr/local/lib" >/etc/ld.so.conf.d/python3.conf ;\
+	echo "/usr/local/lib" >/etc/ld.so.conf.d/python3.conf; \
 	ldconfig; \
 	\
 	python3 --version
