@@ -36,11 +36,12 @@ RUN set -eux ; \
 	rm -rf "$GNUPGHOME" python.tar.xz.asc; \
 	\
 	mkdir -p /usr/src/python ; \
-	tar -xJf python.tar.xz --strip-components=1 -C /usr/src/python ;\
+	tar -xJf python.tar.xz --strip-components=1 -C /usr/src/python ; \
+	rm python.tar.xz ; \
 	\
     cd /usr/src/python ; \
     ./configure \
-		--build=$(uname -m) \
+		--build=$(uname -m)-linux-gnu \
 		--enable-loadable-sqlite-extensions \
 		--enable-optimizations \
 		--enable-option-checking=fatal \
