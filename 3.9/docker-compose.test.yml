@@ -2,5 +2,5 @@ services:
   sut:
     build: .
     command: /tests/run_tests.sh
-  volume:
-    - ./tests:/tests
+    volumes:
+      - ./tests:/tests
