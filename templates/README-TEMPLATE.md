@@ -15,3 +15,9 @@ Generate version 3.9 from the git file directly
 ```bash
 echo '3.9' | gomplate -d pybranch=stdin: -d versions=https://raw.githubusercontent.com/docker-library/python/master/versions.json?type=application/json -t ./templates/support.t --input-dir=templates --output-dir=3.9
 ```
+
+Generate version 3.10 from a locally downloaded ``versions.json`` using an environment variable
+
+```bash
+PY_BRANCH="3.10" gomplate -d versions.json -t ./templates/support.t --input-dir=templates --output-dir=3.10
+```
