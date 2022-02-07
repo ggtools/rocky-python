@@ -4,7 +4,7 @@ VERSIONS_URL=${VERSIONS_URL:-https://raw.githubusercontent.com/docker-library/py
 
 VERSIONS_JSON=$(mktemp -t versions.XXXXXXXX.json)
 
-curl -s -o $VERSIONS_JSON $VERSIONS_URL
+curl -s -L -o $VERSIONS_JSON $VERSIONS_URL
 
 for version in $(jq -r 'keys[]' $VERSIONS_JSON)
 do
@@ -17,4 +17,4 @@ do
     fi
 done
 
-# rm -f $VERSIONS_JSON
+rm -f $VERSIONS_JSON
