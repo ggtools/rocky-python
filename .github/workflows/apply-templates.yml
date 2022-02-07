@@ -1,0 +1,25 @@
+name: Apply Templates
+on:
+  schedule:
+    - cron: "17 4 * * *"
+jobs:
+  update-python-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: docker://hairyhenderson/gomplate-ci-build:latest
+
+      - name: Apply Templates
+        run: ./apply-templates.sh
+
+      - name: Check Git Status
+        run: |
+          status="$(git status --short)"
+          [ -z "$status" ]
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          delete-branch: true
+          commit-message: "[create-pull-request] Apply templates from official images"
