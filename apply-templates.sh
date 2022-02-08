@@ -2,7 +2,7 @@
 
 VERSIONS_URL=${VERSIONS_URL:-https://raw.githubusercontent.com/docker-library/python/master/versions.json}
 
-VERSIONS_JSON=$(mktemp -t versions.XXXXXXXX.json)
+VERSIONS_JSON=$(mktemp -t versions.XXXXXXXX)
 
 # Fail on error
 set -e
@@ -14,7 +14,7 @@ do
     if [ -d $version ]
     then
         echo "Generating templates for $version"
-        PY_BRANCH="$version" gomplate -d versions=$VERSIONS_JSON -t ./templates/support.t --input-dir=templates --output-dir=$version
+        PY_BRANCH="$version" gomplate -d versions=${VERSIONS_JSON}?type=application/json -t ./templates/support.t --input-dir=templates --output-dir=$version
     else
         echo "Skipping version $version"
     fi
