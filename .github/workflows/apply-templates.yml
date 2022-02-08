@@ -6,7 +6,8 @@ on:
 jobs:
   update-python-versions:
     runs-on: ubuntu-latest
-    container: "hairyhenderson/gomplate-ci-build:latest"
+    container: 
+      image: "hairyhenderson/gomplate:alpine"
     steps:
       - uses: actions/checkout@v2
 
