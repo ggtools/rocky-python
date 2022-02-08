@@ -1,13 +1,15 @@
 name: Apply Templates
 on:
+  push:
   schedule:
     - cron: "17 4 * * *"
 jobs:
   update-python-versions:
     runs-on: ubuntu-latest
+    container: 
+      image: "ggtools/gomplate-alpine:latest"
     steps:
       - uses: actions/checkout@v2
-      - uses: docker://hairyhenderson/gomplate-ci-build:latest
 
       - name: Apply Templates
         run: ./apply-templates.sh
