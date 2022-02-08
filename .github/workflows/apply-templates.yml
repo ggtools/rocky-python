@@ -7,7 +7,7 @@ jobs:
   update-python-versions:
     runs-on: ubuntu-latest
     container: 
-      image: "hairyhenderson/gomplate:alpine"
+      image: "ggtools/gomplate-alpine:latest"
     steps:
       - uses: actions/checkout@v2
 

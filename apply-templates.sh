@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 VERSIONS_URL=${VERSIONS_URL:-https://raw.githubusercontent.com/docker-library/python/master/versions.json}
 
