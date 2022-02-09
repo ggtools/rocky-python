@@ -21,9 +21,10 @@ jobs:
       - name: Pull Image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: rocky-linux
+          ECR_REPOSITORY: rocky-python
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          echo docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          echo docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker pull ggtools/rocky-python:latest
+          docker tag ggtools/rocky-python:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
