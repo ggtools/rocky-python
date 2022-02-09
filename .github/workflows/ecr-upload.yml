@@ -25,6 +25,6 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker pull ggtools/rocky-python:latest
-          docker tag ggtools/rocky-python:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker tag ggtools/rocky-python:latest public.ecr.aws/h7h4g8x7/$ECR_REPOSITORY:latest
+          docker push public.ecr.aws/h7h4g8x7/$ECR_REPOSITORY:latest
 
