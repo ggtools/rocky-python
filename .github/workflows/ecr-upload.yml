@@ -1,6 +1,8 @@
 name: Ecr Upload
 on:
   push:
+  repository_dispatch:
+    types: [push_image]
   # schedule:
   #   - cron: "17 4 * * *"
 jobs:
