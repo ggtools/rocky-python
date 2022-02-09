@@ -7,24 +7,17 @@ jobs:
   upload-to-ecr:
     runs-on: ubuntu-latest
     steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
       - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Pull Image
+        uses: docker/login-action@v1
+        with:
+          registry: public.ecr.aws
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: rocky-python
-          IMAGE_TAG: ${{ github.sha }}
+          AWS_REGION: us-east-1
+
+      - name: Pull Push
         run: |
           docker pull ggtools/rocky-python:latest
-          docker tag ggtools/rocky-python:latest public.ecr.aws/h7h4g8x7/$ECR_REPOSITORY:latest
-          docker push public.ecr.aws/h7h4g8x7/$ECR_REPOSITORY:latest
-
+          docker tag ggtools/rocky-python:latest public.ecr.aws/h7h4g8x7/rocky-python:latest
+          docker push public.ecr.aws/h7h4g8x7/rocky-python:latest
