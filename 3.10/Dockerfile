@@ -1,4 +1,7 @@
-FROM rockylinux:8.5
+FROM rockylinux:8.5.20220308
+
+# Update rocky linux with latest changes
+RUN yum -y update && yum clean all
 
 # Rocky Linux already adds /usr/local/bin in the PATH
 # ENV PATH /usr/local/bin:$PATH
