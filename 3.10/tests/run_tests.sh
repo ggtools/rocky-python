@@ -5,7 +5,7 @@ MY_DIR=$(dirname $0)
 cd $MY_DIR
 
 echo "Checking python version"
-python --version | grep -q '^Python 3.10.3'
+python --version | grep -q '^Python 3.10.4'
 
 echo "Installing Pandas"
 pip install Pandas
