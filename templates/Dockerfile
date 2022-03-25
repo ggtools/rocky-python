@@ -2,7 +2,7 @@
 {{- $pythonBranch := trim (ds "pybranch") " \n\r" -}}
 {{- $versionData := (index (ds "versions") $pythonBranch) -}}
 {{- $pythonVersion := $versionData.version -}}
-FROM rockylinux:8.5
+FROM rockylinux:8.5.20220308
 
 # Rocky Linux already adds /usr/local/bin in the PATH
 # ENV PATH /usr/local/bin:$PATH
