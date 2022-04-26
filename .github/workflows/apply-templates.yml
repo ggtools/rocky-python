@@ -14,8 +14,8 @@ jobs:
       - name: Apply Templates
         run: ./apply-templates.sh
         
-      - name: Mark cwd as safe for git
-        run: git config --global --add safe.directory .
+      - name: Mark git directory as safe
+        run: git config --global --add safe.directory /__w/rocky-python/rocky-python
 
       - name: Display Git Status
         run: git status
