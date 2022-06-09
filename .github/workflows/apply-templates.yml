@@ -1,8 +1,9 @@
 name: Apply Templates
 on:
-  push:
-  schedule:
-    - cron: "17 4 * * *"
+  workflow_dispatch:
+  # push:
+  # schedule:
+  #   - cron: "17 4 * * *"
 jobs:
   update-python-versions:
     runs-on: ubuntu-latest
