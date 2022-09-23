@@ -20,7 +20,6 @@ RUN set -eux; \
 		openssl-devel \
 		readline-devel \
 		bzip2-devel \
-		gdbm-devel \
 		sqlite-devel \
 		libuuid-devel \
 		; \
