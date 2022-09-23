@@ -1,4 +1,4 @@
-FROM rockylinux:8.5.20220308
+FROM rockylinux:9
 
 # Update rocky linux with latest changes
 RUN yum -y update && yum clean all
