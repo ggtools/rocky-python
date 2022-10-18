@@ -13,6 +13,8 @@ ENV PYTHON_VERSION 3.9.15
 
 RUN set -eux; \
     \
+    dnf -y install 'dnf-command(config-manager)' ; \
+    dnf config-manager --set-enabled crb ; \
     yum groupinstall -y "Development Tools"; \
     yum -y install \
 		libffi-devel \
@@ -20,6 +22,7 @@ RUN set -eux; \
 		openssl-devel \
 		readline-devel \
 		bzip2-devel \
+		gdbm-devel \
 		sqlite-devel \
 		libuuid-devel \
 		; \
