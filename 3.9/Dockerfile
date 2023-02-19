@@ -1,4 +1,4 @@
-FROM rockylinux:9.0.20220720
+FROM rockylinux:9.1.20221221
 
 # Update rocky linux with latest changes
 RUN yum -y update && yum clean all
@@ -86,8 +86,8 @@ ENV PYTHON_PIP_VERSION 22.0.4
 ENV PYTHON_SETUPTOOLS_VERSION 58.1.0
 
 # https://github.com/pypa/get-pip
-ENV PYTHON_GET_PIP_URL https://github.com/pypa/get-pip/raw/66030fa03382b4914d4c4d0896961a0bdeeeb274/public/get-pip.py
-ENV PYTHON_GET_PIP_SHA256 1e501cf004eac1b7eb1f97266d28f995ae835d30250bec7f8850562703067dc6
+ENV PYTHON_GET_PIP_URL https://github.com/pypa/get-pip/raw/d5cb0afaf23b8520f1bbcfed521017b4a95f5c01/public/get-pip.py
+ENV PYTHON_GET_PIP_SHA256 394be00f13fa1b9aaa47e911bdb59a09c3b2986472130f30aa0bfaf7f3980637
 
 RUN set -eux; \
 	\
