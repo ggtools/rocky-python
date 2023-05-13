@@ -2,7 +2,7 @@
 {{- $pythonBranch := trim (ds "pybranch") " \n\r" -}}
 {{- $versionData := (index (ds "versions") $pythonBranch) -}}
 {{- $pythonVersion := $versionData.version -}}
-FROM rockylinux:9.1.20221221
+FROM rockylinux:9.1.20230215
 
 # Update rocky linux with latest changes
 RUN yum -y update && yum clean all
